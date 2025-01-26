@@ -1,0 +1,1475 @@
+TLAN Interactive Training 
+
+ 
+
+Configure project: 
+
+Application Name: Interactive Employee Training (I know we said TLAN Interactive Training but its hard to change the application name)  
+
+Company Domain: ElGrupoDosCybersecurityCompany.com 
+
+Package name: com.ElGrupoDosCybersecurityCompany.interactivetraining 
+
+Select a minimum API level (e.g., API 21 - Lollipop) 
+
+Folder app (holds all the folders or head folder) 
+
+             Folder – manifest  
+
+                (in manifest folder) AndroidManifest.xml 
+
+      <?xml version="1.0" encoding="utf-8"?> 
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" 
+    xmlns:tools="http://schemas.android.com/tools"> 
+ 
+    <application 
+        android:allowBackup="true" 
+        android:dataExtractionRules="@xml/data_extraction_rules" 
+        android:fullBackupContent="@xml/backup_rules" 
+        android:icon="@mipmap/ic_launcher" 
+        android:label="@string/app_name" 
+        android:roundIcon="@mipmap/ic_launcher_round" 
+        android:supportsRtl="true" 
+        android:theme="@style/Theme.InteractiveEmployeeTraining" 
+        tools:targetApi="31"> 
+        <activity 
+            android:name=".MainActivity" 
+            android:exported="true" 
+            android:label="@string/app_name"> 
+            <intent-filter> 
+                <action android:name="android.intent.action.MAIN" /> 
+ 
+                <category android:name="android.intent.category.LAUNCHER" /> 
+            </intent-filter> 
+        </activity> 
+    </application> 
+ 
+</manifest> 
+
+Folder -  java 
+
+(In jave folder) Folder – com.ElGrupoDocCybersecurityCompany.interactivetraining 
+
+(In j com.ElGrupoDocCybersecurityCompany.interactivetraining folder) Folder – ui 
+
+(in the ui folder)  Folder – adapter 
+
+(in the adapters folder) (java code) TrainingAdapter 
+
+Package com.ElGrupoDosCybersecurityCompany.interactivetraining.ui.adapters; 
+ 
+import android.view.LayoutInflater; 
+import android.view.View; 
+import android.view.ViewGroup; 
+import androidx.annotation.NonNull; 
+import androidx.recyclerview.widget.RecyclerView; 
+import com.ElGrupoDosCybersecurityCompany.interactivetraining.ui.models.TrainingModule; 
+import java.util.List; 
+ 
+public class TrainingAdapter extends RecyclerView.Adapter<TrainingAdapter.TrainingViewHolder> { 
+ 
+ 
+    // Constructor 
+    public TrainingAdapter(List<TrainingModule> trainingModules) { 
+        this.trainingModule = trainingModules; 
+    } 
+ 
+    @NonNull 
+    @Override 
+    public TrainingViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) { 
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_training, parent, false); 
+        return new TrainingViewHolder(view); 
+    } 
+ 
+    @Override 
+    public void onBindViewHolder(@NonNull TrainingViewHolder holder, int position) { 
+        TrainingModule module = trainingModules.get(position); 
+        // Bind data to UI elements (e.g., holder.titleTextView.setText(module.getTitle())) 
+    } 
+ 
+    @Override 
+    public int getItemCount() { 
+        return trainingModules != null ? trainingModules.size() : 0; 
+    } 
+ 
+    static class TrainingViewHolder extends RecyclerView.ViewHolder { 
+        // Define UI elements here (e.g., TextView titleTextView) 
+ 
+        TrainingViewHolder(@NonNull View itemView) { 
+            super(itemView); 
+            // Initialize UI elements (e.g., titleTextView = itemView.findViewById(R.id.titleTextView)) 
+        } 
+    } 
+} 
+
+(in the ui folder) Folder – dashboard (two java code) 
+
+(java code) DashboardFragment 
+
+package com.ElGrupoDosCybersecurityCompany.interactivetraining.ui.dashboard; 
+ 
+import android.os.Bundle; 
+import android.view.LayoutInflater; 
+import android.view.View; 
+import android.view.ViewGroup; 
+import android.widget.TextView; 
+ 
+import androidx.annotation.NonNull; 
+import androidx.fragment.app.Fragment; 
+import androidx.lifecycle.ViewModelProvider; 
+ 
+import com.ElGrupoDosCybersecurityCompany.interactivetraining.databinding.FragmentDashboardBinding; 
+ 
+public class DashboardFragment extends Fragment { 
+ 
+    private FragmentDashboardBinding binding; 
+ 
+    public View onCreateView(@NonNull LayoutInflater inflater, 
+                             ViewGroup container, Bundle savedInstanceState) { 
+        DashboardViewModel dashboardViewModel = 
+                new ViewModelProvider(this).get(DashboardViewModel.class); 
+ 
+        binding = FragmentDashboardBinding.inflate(inflater, container, false); 
+        View root = binding.getRoot(); 
+ 
+        final TextView textView = binding.textDashboard; 
+        dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText); 
+        return root; 
+    } 
+ 
+    @Override 
+    public void onDestroyView() { 
+        super.onDestroyView(); 
+        binding = null; 
+    } 
+} 
+
+                    (java code) DashboardViewModel 
+
+package com.ElGrupoDosCybersecurityCompany.interactivetraining.ui.dashboard; 
+ 
+import androidx.lifecycle.LiveData; 
+import androidx.lifecycle.MutableLiveData; 
+import androidx.lifecycle.ViewModel; 
+ 
+public class DashboardViewModel extends ViewModel { 
+ 
+    private final MutableLiveData<String> mText; 
+ 
+    public DashboardViewModel() { 
+        mText = new MutableLiveData<>(); 
+        mText.setValue("This is dashboard fragment"); 
+    } 
+ 
+    public LiveData<String> getText() { 
+        return mText; 
+    } 
+} 
+
+(in ui folder) Folder home (two java codes) 
+
+(Java code) HomeFragment 
+
+package com.ElGrupoDosCybersecurityCompany.interactivetraining; 
+ 
+import android.os.Bundle; 
+import androidx.annotation.NonNull; 
+import androidx.annotation.Nullable; 
+import androidx.fragment.app.Fragment; 
+import android.view.LayoutInflater; 
+import android.view.View; 
+import android.view.ViewGroup; 
+ 
+public class HomeFragment extends Fragment { 
+ 
+    @Nullable 
+    @Override 
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) { 
+        // Inflate the fragment_home layout and return the view 
+        return inflater.inflate(R.layout.fragment_home, container, false); 
+    } 
+} 
+
+(jave code) HomeViewModel 
+
+package com.ElGrupoDosCybersecurityCompany.interactivetraining.ui.home; 
+
+ 
+
+import android.os.Bundle; 
+
+import android.view.LayoutInflater; 
+
+import android.view.View; 
+
+import android.view.ViewGroup; 
+
+import android.widget.TextView; 
+
+ 
+
+import androidx.annotation.NonNull; 
+
+import androidx.fragment.app.Fragment; 
+
+import androidx.lifecycle.ViewModelProvider; 
+
+ 
+
+public class HomeFragment extends Fragment { 
+
+ 
+
+    private HomeViewModel homeViewModel; 
+
+ 
+
+    @Override 
+
+    public View onCreateView(@NonNull LayoutInflater inflater, 
+
+                             ViewGroup container, Bundle savedInstanceState) { 
+
+        // Initialize the ViewModel 
+
+        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class); 
+
+ 
+
+        // Inflate the layout for this fragment 
+
+        View root = inflater.inflate(R.layout.fragment_home, container, false); 
+
+ 
+
+        // Bind the TextView to the ViewModel 
+
+        final TextView textView = root.findViewById(R.id.text_home); 
+
+        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText); 
+
+ 
+
+        return root; 
+
+    } 
+
+} 
+
+ 
+
+(in ui folder) folder models (two java codes) 
+
+(java code) Training Module 
+
+package com.ElGrupoDosCybersecurityCompany.interactivetraining.ui.models; 
+ 
+public class TrainingModule { 
+    private String moduleId; 
+    private String title; 
+    private String description; 
+    private boolean isCompleted; 
+    private int durationMinutes; 
+ 
+    // Constructor 
+    public TrainingModule(String moduleId, String title, String description, boolean isCompleted, int durationMinutes) { 
+        this.moduleId = moduleId; 
+        this.title = title; 
+        this.description = description; 
+        this.isCompleted = isCompleted; 
+        this.durationMinutes = durationMinutes; 
+    } 
+ 
+    // Getters and setters 
+    public String getModuleId() { 
+        return moduleId; 
+    } 
+ 
+    public void setModuleId(String moduleId) { 
+        this.moduleId = moduleId; 
+    } 
+ 
+    public String getTitle() { 
+        return title; 
+    } 
+ 
+    public void setTitle(String title) { 
+        this.title = title; 
+    } 
+ 
+    public String getDescription() { 
+        return description; 
+    } 
+ 
+    public void setDescription(String description) { 
+        this.description = description; 
+    } 
+ 
+    public boolean isCompleted() { 
+        return isCompleted; 
+    } 
+ 
+    public void setCompleted(boolean completed) { 
+        isCompleted = completed; 
+    } 
+ 
+    public int getDurationMinutes() { 
+        return durationMinutes; 
+    } 
+ 
+    public void setDurationMinutes(int durationMinutes) { 
+        this.durationMinutes = durationMinutes; 
+    } 
+} 
+
+(java code) User 
+
+package com.ElGrupoDosCybersecurityCompany.interactivetraining.ui.models; 
+ 
+public class User { 
+    private String name; 
+    private String email; 
+    private int points; 
+    private String badge; 
+ 
+    // Getters and setters 
+    public String getName() { 
+        return name; 
+    } 
+ 
+    public void setName(String name) { 
+        this.name = name; 
+    } 
+ 
+    public String getEmail() { 
+        return email; 
+    } 
+ 
+    public void setEmail(String email) { 
+        this.email = email; 
+    } 
+ 
+    public int getPoints() { 
+        return points; 
+    } 
+ 
+    public void setPoints(int points) { 
+        this.points = points; 
+    } 
+ 
+    public String getBadge() { 
+        return badge; 
+    } 
+ 
+    public void setBadge(String badge) { 
+        this.badge = badge; 
+    } 
+} 
+
+(in ui folder) notifications (two java code) 
+
+(java code) NotificationsFragment 
+
+package com.ElGrupoDosCybersecurityCompany.interactivetraining.ui.notifications; 
+ 
+import android.os.Bundle; 
+import android.view.LayoutInflater; 
+import android.view.View; 
+import android.view.ViewGroup; 
+import android.widget.TextView; 
+ 
+import androidx.annotation.NonNull; 
+import androidx.fragment.app.Fragment; 
+import androidx.lifecycle.ViewModelProvider; 
+ 
+import com.ElGrupoDosCybersecurityCompany.interactivetraining.databinding.FragmentNotificationsBinding; 
+ 
+public class NotificationsFragment extends Fragment { 
+ 
+    private FragmentNotificationsBinding binding; 
+ 
+    public View onCreateView(@NonNull LayoutInflater inflater, 
+                             ViewGroup container, Bundle savedInstanceState) { 
+        NotificationsViewModel notificationsViewModel = 
+                new ViewModelProvider(this).get(NotificationsViewModel.class); 
+ 
+        binding = FragmentNotificationsBinding.inflate(inflater, container, false); 
+        View root = binding.getRoot(); 
+ 
+        final TextView textView = binding.textNotifications; 
+        notificationsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText); 
+        return root; 
+    } 
+ 
+    @Override 
+    public void onDestroyView() { 
+        super.onDestroyView(); 
+        binding = null; 
+    } 
+} 
+
+(java code) NotificationsViewModel 
+
+       package com.ElGrupoDosCybersecurityCompany.interactivetraining.ui.notifications; 
+ 
+import androidx.lifecycle.LiveData; 
+import androidx.lifecycle.MutableLiveData; 
+import androidx.lifecycle.ViewModel; 
+ 
+public class NotificationsViewModel extends ViewModel { 
+ 
+    private final MutableLiveData<String> mText; 
+ 
+    public NotificationsViewModel() { 
+        mText = new MutableLiveData<>(); 
+        mText.setValue("This is notifications fragment"); 
+    } 
+ 
+    public LiveData<String> getText() { 
+        return mText; 
+    } 
+} 
+
+         
+
+(in ui folder)  repositories (two java code) 
+
+(java code) TrainingRepository 
+
+package com.ElGrupoDosCybersecurityCompany.interactivetraining.ui.repositories; 
+ 
+import androidx.lifecycle.LiveData; 
+import androidx.lifecycle.MutableLiveData; 
+import com.ElGrupoDosCybersecurityCompany.interactivetraining.ui.models.TrainingModule; 
+ 
+import java.util.ArrayList; 
+import java.util.List; 
+ 
+public class TrainingRepository { 
+    private final MutableLiveData<List<TrainingModule>> trainingModules = new MutableLiveData<>(); 
+ 
+    public LiveData<List<TrainingModule>> getTrainingModules() { 
+        if (trainingModules.getValue() == null) { 
+            loadTrainingModules(); 
+        } 
+        return trainingModules; 
+    } 
+ 
+    private void loadTrainingModules() { 
+        // Simulate data loading (e.g., from Firebase, REST API, or local database) 
+        List<TrainingModule> modules = new ArrayList<>(); 
+        // Add dummy data or fetch from the actual source 
+        trainingModules.setValue(modules); 
+    } 
+ 
+    public void addTrainingModule(TrainingModule module) { 
+        List<TrainingModule> currentModules = trainingModules.getValue(); 
+        if (currentModules != null) { 
+            currentModules.add(module); 
+            trainingModules.setValue(currentModules); 
+        } 
+    } 
+} 
+
+(java code) UserRepository 
+
+package com.ElGrupoDosCybersecurityCompany.interactivetraining.ui.repositories; 
+ 
+import androidx.lifecycle.LiveData; 
+import androidx.lifecycle.MutableLiveData; 
+import com.ElGrupoDosCybersecurityCompany.interactivetraining.ui.models.User; 
+ 
+import java.util.ArrayList; 
+import java.util.List; 
+ 
+public class UserRepository { 
+    private final MutableLiveData<List<User>> users = new MutableLiveData<>(); 
+ 
+    public LiveData<List<User>> getUsers() { 
+        if (users.getValue() == null) { 
+            loadUsers(); 
+        } 
+        return users; 
+    } 
+ 
+    private void loadUsers() { 
+        // Simulate data loading (e.g., from Firebase, REST API, or local database) 
+        List<User> userList = new ArrayList<>(); 
+        // Add dummy data or fetch from the actual source 
+        users.setValue(userList); 
+    } 
+ 
+    public void addUser(User user) { 
+        List<User> currentUsers = users.getValue(); 
+        if (currentUsers != null) { 
+            currentUsers.add(user); 
+            users.setValue(currentUsers); 
+        } 
+    } 
+} 
+
+(in ui folder) services (two java code) 
+
+(java code) NotificationService 
+
+package com.ElGrupoDosCybersecurityCompany.interactivetraining.ui.services; 
+ 
+import android.app.Service; 
+import android.content.Intent; 
+import android.os.IBinder; 
+import android.util.Log; 
+ 
+public class NotificationService extends Service { 
+    private static final String TAG = "NotificationService"; 
+ 
+    @Override 
+    public IBinder onBind(Intent intent) { 
+        return null; // This service does not support binding 
+    } 
+ 
+    @Override 
+    public int onStartCommand(Intent intent, int flags, int startId) { 
+        Log.d(TAG, "Notification service started"); 
+        // TODO: Implement logic to handle push notifications here 
+        return START_NOT_STICKY; // Service will not restart if killed 
+    } 
+ 
+    @Override 
+    public void onDestroy() { 
+        super.onDestroy(); 
+        Log.d(TAG, "Notification service destroyed"); 
+    } 
+} 
+
+(java code) SyncService 
+
+package com.ElGrupoDosCybersecurityCompany.interactivetraining.ui.services; 
+ 
+ 
+import android.app.Service; 
+import android.content.Intent; 
+import android.os.IBinder; 
+import android.util.Log; 
+ 
+public class SyncService extends Service { 
+    private static final String TAG = "SyncService"; 
+ 
+    @Override 
+    public IBinder onBind(Intent intent) { 
+        return null; // This service does not support binding 
+    } 
+ 
+    @Override 
+    public int onStartCommand(Intent intent, int flags, int startId) { 
+        Log.d(TAG, "Sync service started"); 
+        // TODO: Implement logic to synchronize data with the server 
+        return START_NOT_STICKY; // Service will not restart if killed 
+    } 
+ 
+    @Override 
+    public void onDestroy() { 
+        super.onDestroy(); 
+        Log.d(TAG, "Sync service destroyed"); 
+    } 
+} 
+
+(in ui folder) social ( 1 java code) 
+
+(java code) SocialFragment 
+
+package com.ElGrupoDosCybersecurityCompany.interactivetraining.ui.social; 
+ 
+import android.os.Bundle; 
+import androidx.annotation.NonNull; 
+import androidx.annotation.Nullable; 
+import androidx.fragment.app.Fragment; 
+import android.view.LayoutInflater; 
+import android.view.View; 
+import android.view.ViewGroup; 
+ 
+public class SocialFragment extends Fragment { 
+ 
+    @Nullable 
+    @Override 
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) { 
+        return inflater.inflate(R.layout.fragment_social, container, false); 
+    } 
+} 
+
+(in ui folder) training (1 java code) 
+
+(java code) Training Fragment 
+
+package com.ElGrupoDosCybersecurityCompany.interactivetraining.ui.training; 
+ 
+import android.os.Bundle; 
+import androidx.annotation.NonNull; 
+import androidx.annotation.Nullable; 
+import androidx.fragment.app.Fragment; 
+import android.view.LayoutInflater; 
+import android.view.View; 
+import android.view.ViewGroup; 
+ 
+public class TrainingFragment extends Fragment { 
+ 
+    @Nullable 
+    @Override 
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) { 
+        return inflater.inflate(R.layout.fragment_training, container, false); 
+    } 
+} 
+
+(in ui folder) viewmodels (two java code) 
+
+(java code) TrainingViewModel’ 
+
+package com.ElGrupoDosCybersecurityCompany.interactivetraining.ui.viewmodels; 
+ 
+import androidx.lifecycle.LiveData; 
+import androidx.lifecycle.MutableLiveData; 
+import androidx.lifecycle.ViewModel; 
+import com.ElGrupoDosCybersecurityCompany.interactivetraining.ui.models.TrainingModule; 
+ 
+import java.util.List; 
+ 
+public class TrainingViewModel extends ViewModel { 
+    private MutableLiveData<List<TrainingModule>> trainingModules; 
+ 
+    public LiveData<List<TrainingModule>> getTrainingModules() { 
+        if (trainingModules == null) { 
+            trainingModules = new MutableLiveData<>(); 
+            loadTrainingModules(); 
+        } 
+        return trainingModules; 
+    } 
+ 
+    private void loadTrainingModules() { 
+        // Load training module data (e.g., from a repository) 
+    } 
+} 
+
+(java code) UserViewModel 
+
+package com.ElGrupoDosCybersecurityCompany.interactivetraining.ui.viewmodels; 
+ 
+import androidx.lifecycle.LiveData; 
+import androidx.lifecycle.MutableLiveData; 
+import androidx.lifecycle.ViewModel; 
+import com.ElGrupoDosCybersecurityCompany.interactivetraining.ui.models.User; 
+ 
+public class UserViewModel extends ViewModel { 
+    private MutableLiveData<User> user; 
+ 
+    public LiveData<User> getUser() { 
+        if (user == null) { 
+            user = new MutableLiveData<>(); 
+            loadUser(); 
+        } 
+        return user; 
+    } 
+ 
+    private void loadUser() { 
+        // Load user data (e.g., from a repository) 
+    } 
+} 
+
+ 
+
+(in ui folder) this just needs to be in the root – MainActivity 
+
+(java code) MainActivty 
+
+package com.ElGrupoDosCybersecurityCompany.interactivetraining; 
+ 
+import android.os.Bundle; 
+import androidx.annotation.NonNull; 
+import androidx.appcompat.app.AppCompatActivity; 
+import androidx.fragment.app.Fragment; 
+import androidx.drawerlayout.widget.DrawerLayout; 
+import com.google.android.material.navigation.NavigationView; 
+ 
+public class MainActivity extends AppCompatActivity { 
+ 
+    @Override 
+    protected void onCreate(Bundle savedInstanceState) { 
+        super.onCreate(savedInstanceState); 
+        setContentView(R.layout.activity_main); 
+ 
+        // Initialize DrawerLayout and NavigationView 
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout); 
+        NavigationView navigationView = findViewById(R.id.nav_view); 
+ 
+        // Set HomeFragment as the default fragment when activity starts 
+        if (savedInstanceState == null) { 
+            loadFragment(new HomeFragment()); 
+        } 
+ 
+        // Handle navigation item selection 
+        navigationView.setNavigationItemSelectedListener(item -> { 
+            Fragment selectedFragment; 
+ 
+            // Determine which fragment to display based on the selected menu item 
+            switch (item.getItemId()) { 
+                case R.id.nav_home: 
+                    selectedFragment = new HomeFragment(); 
+                    break; 
+                case R.id.nav_training: 
+                    selectedFragment = new TrainingFragment(); 
+                    break; 
+                case R.id.nav_social: 
+                    selectedFragment = new SocialFragment(); 
+                    break; 
+                default: 
+                    selectedFragment = new HomeFragment(); // Default to HomeFragment 
+                    break; 
+            } 
+ 
+            // Load the selected fragment 
+            loadFragment(selectedFragment); 
+ 
+            // Close the navigation drawer 
+            drawerLayout.closeDrawers(); 
+            return true; 
+        }); 
+    } 
+ 
+    /** 
+     * Helper method to load a fragment into the fragment container. 
+     * 
+     * @param fragment The fragment to display. 
+     */ 
+    private void loadFragment(Fragment fragment) { 
+        getSupportFragmentManager().beginTransaction() 
+                .replace(R.id.fragment_container, fragment) 
+                .commit(); 
+    } 
+} 
+
+ 
+
+ 
+
+(in ui folder ) Folder holding ExampleInstrumentedTest 
+
+(in ui folder) Folder holding ExampleUnitTest 
+
+ 
+
+Now we come to the res folder or resource file  
+
+(in app folder) Res folder 
+
+(In res folder) drawable (it holds 5 .xml codes 
+
+ 
+
+Ic_dashboard_black_24dp.xml 
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:width="24dp" 
+    android:height="24dp" 
+    android:viewportWidth="24.0" 
+    android:viewportHeight="24.0"> 
+    <path 
+        android:fillColor="#FF000000" 
+        android:pathData="M3,13h8L11,3L3,3v10zM3,21h8v-6L3,15v6zM13,21h8L21,11h-8v10zM13,3v6h8L21,3h-8z" /> 
+</vector> 
+
+Ic_home_black_24dp.xml 
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:width="24dp" 
+    android:height="24dp" 
+    android:viewportWidth="24.0" 
+    android:viewportHeight="24.0"> 
+    <path 
+        android:fillColor="#FF000000" 
+        android:pathData="M10,20v-6h4v6h5v-8h3L12,3 2,12h3v8z" /> 
+</vector> 
+
+ 
+
+Ic_launcher_background.xml 
+
+<?xml version="1.0" encoding="utf-8"?> 
+<vector xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:width="108dp" 
+    android:height="108dp" 
+    android:viewportWidth="108" 
+    android:viewportHeight="108"> 
+    <path 
+        android:fillColor="#3DDC84" 
+        android:pathData="M0,0h108v108h-108z" /> 
+    <path 
+        android:fillColor="#00000000" 
+        android:pathData="M9,0L9,108" 
+        android:strokeWidth="0.8" 
+        android:strokeColor="#33FFFFFF" /> 
+    <path 
+        android:fillColor="#00000000" 
+        android:pathData="M19,0L19,108" 
+        android:strokeWidth="0.8" 
+        android:strokeColor="#33FFFFFF" /> 
+    <path 
+        android:fillColor="#00000000" 
+        android:pathData="M29,0L29,108" 
+        android:strokeWidth="0.8" 
+        android:strokeColor="#33FFFFFF" /> 
+    <path 
+        android:fillColor="#00000000" 
+        android:pathData="M39,0L39,108" 
+        android:strokeWidth="0.8" 
+        android:strokeColor="#33FFFFFF" /> 
+    <path 
+        android:fillColor="#00000000" 
+        android:pathData="M49,0L49,108" 
+        android:strokeWidth="0.8" 
+        android:strokeColor="#33FFFFFF" /> 
+    <path 
+        android:fillColor="#00000000" 
+        android:pathData="M59,0L59,108" 
+        android:strokeWidth="0.8" 
+        android:strokeColor="#33FFFFFF" /> 
+    <path 
+        android:fillColor="#00000000" 
+        android:pathData="M69,0L69,108" 
+        android:strokeWidth="0.8" 
+        android:strokeColor="#33FFFFFF" /> 
+    <path 
+        android:fillColor="#00000000" 
+        android:pathData="M79,0L79,108" 
+        android:strokeWidth="0.8" 
+        android:strokeColor="#33FFFFFF" /> 
+    <path 
+        android:fillColor="#00000000" 
+        android:pathData="M89,0L89,108" 
+        android:strokeWidth="0.8" 
+        android:strokeColor="#33FFFFFF" /> 
+    <path 
+        android:fillColor="#00000000" 
+        android:pathData="M99,0L99,108" 
+        android:strokeWidth="0.8" 
+        android:strokeColor="#33FFFFFF" /> 
+    <path 
+        android:fillColor="#00000000" 
+        android:pathData="M0,9L108,9" 
+        android:strokeWidth="0.8" 
+        android:strokeColor="#33FFFFFF" /> 
+    <path 
+        android:fillColor="#00000000" 
+        android:pathData="M0,19L108,19" 
+        android:strokeWidth="0.8" 
+        android:strokeColor="#33FFFFFF" /> 
+    <path 
+        android:fillColor="#00000000" 
+        android:pathData="M0,29L108,29" 
+        android:strokeWidth="0.8" 
+        android:strokeColor="#33FFFFFF" /> 
+    <path 
+        android:fillColor="#00000000" 
+        android:pathData="M0,39L108,39" 
+        android:strokeWidth="0.8" 
+        android:strokeColor="#33FFFFFF" /> 
+    <path 
+        android:fillColor="#00000000" 
+        android:pathData="M0,49L108,49" 
+        android:strokeWidth="0.8" 
+        android:strokeColor="#33FFFFFF" /> 
+    <path 
+        android:fillColor="#00000000" 
+        android:pathData="M0,59L108,59" 
+        android:strokeWidth="0.8" 
+        android:strokeColor="#33FFFFFF" /> 
+    <path 
+        android:fillColor="#00000000" 
+        android:pathData="M0,69L108,69" 
+        android:strokeWidth="0.8" 
+        android:strokeColor="#33FFFFFF" /> 
+    <path 
+        android:fillColor="#00000000" 
+        android:pathData="M0,79L108,79" 
+        android:strokeWidth="0.8" 
+        android:strokeColor="#33FFFFFF" /> 
+    <path 
+        android:fillColor="#00000000" 
+        android:pathData="M0,89L108,89" 
+        android:strokeWidth="0.8" 
+        android:strokeColor="#33FFFFFF" /> 
+    <path 
+        android:fillColor="#00000000" 
+        android:pathData="M0,99L108,99" 
+        android:strokeWidth="0.8" 
+        android:strokeColor="#33FFFFFF" /> 
+    <path 
+        android:fillColor="#00000000" 
+        android:pathData="M19,29L89,29" 
+        android:strokeWidth="0.8" 
+        android:strokeColor="#33FFFFFF" /> 
+    <path 
+        android:fillColor="#00000000" 
+        android:pathData="M19,39L89,39" 
+        android:strokeWidth="0.8" 
+        android:strokeColor="#33FFFFFF" /> 
+    <path 
+        android:fillColor="#00000000" 
+        android:pathData="M19,49L89,49" 
+        android:strokeWidth="0.8" 
+        android:strokeColor="#33FFFFFF" /> 
+    <path 
+        android:fillColor="#00000000" 
+        android:pathData="M19,59L89,59" 
+        android:strokeWidth="0.8" 
+        android:strokeColor="#33FFFFFF" /> 
+    <path 
+        android:fillColor="#00000000" 
+        android:pathData="M19,69L89,69" 
+        android:strokeWidth="0.8" 
+        android:strokeColor="#33FFFFFF" /> 
+    <path 
+        android:fillColor="#00000000" 
+        android:pathData="M19,79L89,79" 
+        android:strokeWidth="0.8" 
+        android:strokeColor="#33FFFFFF" /> 
+    <path 
+        android:fillColor="#00000000" 
+        android:pathData="M29,19L29,89" 
+        android:strokeWidth="0.8" 
+        android:strokeColor="#33FFFFFF" /> 
+    <path 
+        android:fillColor="#00000000" 
+        android:pathData="M39,19L39,89" 
+        android:strokeWidth="0.8" 
+        android:strokeColor="#33FFFFFF" /> 
+    <path 
+        android:fillColor="#00000000" 
+        android:pathData="M49,19L49,89" 
+        android:strokeWidth="0.8" 
+        android:strokeColor="#33FFFFFF" /> 
+    <path 
+        android:fillColor="#00000000" 
+        android:pathData="M59,19L59,89" 
+        android:strokeWidth="0.8" 
+        android:strokeColor="#33FFFFFF" /> 
+    <path 
+        android:fillColor="#00000000" 
+        android:pathData="M69,19L69,89" 
+        android:strokeWidth="0.8" 
+        android:strokeColor="#33FFFFFF" /> 
+    <path 
+        android:fillColor="#00000000" 
+        android:pathData="M79,19L79,89" 
+        android:strokeWidth="0.8" 
+        android:strokeColor="#33FFFFFF" /> 
+</vector> 
+
+ 
+
+Ic_laucher_foreground.xml (v24) 
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android" 
+    xmlns:aapt="http://schemas.android.com/aapt" 
+    android:width="108dp" 
+    android:height="108dp" 
+    android:viewportWidth="108" 
+    android:viewportHeight="108"> 
+    <path android:pathData="M31,63.928c0,0 6.4,-11 12.1,-13.1c7.2,-2.6 26,-1.4 26,-1.4l38.1,38.1L107,108.928l-32,-1L31,63.928z"> 
+        <aapt:attr name="android:fillColor"> 
+            <gradient 
+                android:endX="85.84757" 
+                android:endY="92.4963" 
+                android:startX="42.9492" 
+                android:startY="49.59793" 
+                android:type="linear"> 
+                <item 
+                    android:color="#44000000" 
+                    android:offset="0.0" /> 
+                <item 
+                    android:color="#00000000" 
+                    android:offset="1.0" /> 
+            </gradient> 
+        </aapt:attr> 
+    </path> 
+    <path 
+        android:fillColor="#FFFFFF" 
+        android:fillType="nonZero" 
+        android:pathData="M65.3,45.828l3.8,-6.6c0.2,-0.4 0.1,-0.9 -0.3,-1.1c-0.4,-0.2 -0.9,-0.1 -1.1,0.3l-3.9,6.7c-6.3,-2.8 -13.4,-2.8 -19.7,0l-3.9,-6.7c-0.2,-0.4 -0.7,-0.5 -1.1,-0.3C38.8,38.328 38.7,38.828 38.9,39.228l3.8,6.6C36.2,49.428 31.7,56.028 31,63.928h46C76.3,56.028 71.8,49.428 65.3,45.828zM43.4,57.328c-0.8,0 -1.5,-0.5 -1.8,-1.2c-0.3,-0.7 -0.1,-1.5 0.4,-2.1c0.5,-0.5 1.4,-0.7 2.1,-0.4c0.7,0.3 1.2,1 1.2,1.8C45.3,56.528 44.5,57.328 43.4,57.328L43.4,57.328zM64.6,57.328c-0.8,0 -1.5,-0.5 -1.8,-1.2s-0.1,-1.5 0.4,-2.1c0.5,-0.5 1.4,-0.7 2.1,-0.4c0.7,0.3 1.2,1 1.2,1.8C66.5,56.528 65.6,57.328 64.6,57.328L64.6,57.328z" 
+        android:strokeWidth="1" 
+        android:strokeColor="#00000000" /> 
+</vector> 
+
+ 
+
+Ic_notifications_black_24dp.mxl 
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:width="24dp" 
+    android:height="24dp" 
+    android:viewportWidth="24.0" 
+    android:viewportHeight="24.0"> 
+    <path 
+        android:fillColor="#FF000000" 
+        android:pathData="M12,22c1.1,0 2,-0.9 2,-2h-4c0,1.1 0.89,2 2,2zM18,16v-5c0,-3.07 -1.64,-5.64 -4.5,-6.32L13.5,4c0,-0.83 -0.67,-1.5 -1.5,-1.5s-1.5,0.67 -1.5,1.5v0.68C7.63,5.36 6,7.92 6,11v5l-2,2v1h16v-1l-2,-2z" /> 
+</vector> 
+
+(in res folder) layout folder (holds 8 .xml codes) 
+
+ 
+
+activity_main.xml 
+
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+    xmlns:app="http://schemas.android.com/apk/res-auto" 
+    xmlns:tools="http://schemas.android.com/tools" 
+    android:layout_width="match_parent" 
+    android:layout_height="match_parent"> 
+ 
+    <!-- Main content layout --> 
+    <androidx.constraintlayout.widget.ConstraintLayout 
+        android:layout_width="match_parent" 
+        android:layout_height="match_parent" 
+        tools:context=".MainActivity" /> 
+ 
+    <!-- Navigation view inside the DrawerLayout --> 
+    <com.google.android.material.navigation.NavigationView 
+        android:id="@+id/nav_view" 
+        android:layout_width="wrap_content" 
+        android:layout_height="match_parent" 
+        android:layout_gravity="start" 
+        app:headerLayout="@layout/nav_header" 
+        app:menu="@menu/nav_menu" /> 
+ 
+</androidx.drawerlayout.widget.DrawerLayout> 
+
+ 
+
+app_bar_main.xml 
+
+<?xml version="1.0" encoding="utf-8"?> 
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:layout_width="match_parent" 
+    android:layout_height="match_parent"> 
+ 
+    <com.google.android.material.appbar.AppBarLayout 
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content"> 
+ 
+        <com.google.android.material.appbar.CollapsingToolbarLayout 
+            android:layout_width="match_parent" 
+            android:layout_height="wrap_content"> 
+            <!-- Add a Toolbar or similar view here --> 
+        </com.google.android.material.appbar.CollapsingToolbarLayout> 
+    </com.google.android.material.appbar.AppBarLayout> 
+ 
+</androidx.coordinatorlayout.widget.CoordinatorLayout> 
+
+ 
+
+fragment_dashboard.xml 
+
+<?xml version="1.0" encoding="utf-8"?> 
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+    xmlns:app="http://schemas.android.com/apk/res-auto" 
+    xmlns:tools="http://schemas.android.com/tools" 
+    android:layout_width="match_parent" 
+    android:layout_height="match_parent" 
+    tools:context=".ui.dashboard.DashboardFragment"> 
+ 
+    <TextView 
+        android:id="@+id/text_dashboard" 
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content" 
+        android:layout_marginStart="8dp" 
+        android:layout_marginTop="8dp" 
+        android:layout_marginEnd="8dp" 
+        android:textAlignment="center" 
+        android:textSize="20sp" 
+        app:layout_constraintBottom_toBottomOf="parent" 
+        app:layout_constraintEnd_toEndOf="parent" 
+        app:layout_constraintStart_toStartOf="parent" 
+        app:layout_constraintTop_toTopOf="parent" /> 
+</androidx.constraintlayout.widget.ConstraintLayout> 
+
+ 
+
+Fragment_home.xml 
+
+<?xml version="1.0" encoding="utf-8"?> 
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:layout_width="match_parent" 
+    android:layout_height="match_parent" 
+    android:orientation="vertical" 
+    android:padding="16dp"> 
+ 
+    <TextView 
+        android:id="@+id/tv_home" 
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content" 
+        android:text="@string/home_fragment" 
+        android:textSize="18sp" 
+        android:textStyle="bold" /> 
+ 
+    <!-- Add other UI components as needed --> 
+ 
+</LinearLayout> 
+
+fragment_notifications.xml 
+
+<?xml version="1.0" encoding="utf-8"?> 
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+    xmlns:app="http://schemas.android.com/apk/res-auto" 
+    xmlns:tools="http://schemas.android.com/tools" 
+    android:layout_width="match_parent" 
+    android:layout_height="match_parent" 
+    tools:context=".ui.notifications.NotificationsFragment"> 
+ 
+    <TextView 
+        android:id="@+id/text_notifications" 
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content" 
+        android:layout_marginStart="8dp" 
+        android:layout_marginTop="8dp" 
+        android:layout_marginEnd="8dp" 
+        android:textAlignment="center" 
+        android:textSize="20sp" 
+        app:layout_constraintBottom_toBottomOf="parent" 
+        app:layout_constraintEnd_toEndOf="parent" 
+        app:layout_constraintStart_toStartOf="parent" 
+        app:layout_constraintTop_toTopOf="parent" /> 
+</androidx.constraintlayout.widget.ConstraintLayout> 
+
+fragment_social.xml 
+
+<?xml version="1.0" encoding="utf-8"?> 
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:layout_width="match_parent" 
+    android:layout_height="match_parent" 
+    android:orientation="vertical" 
+    android:padding="16dp"> 
+ 
+    <TextView 
+        android:id="@+id/tv_social" 
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content" 
+        android:text="@string/title_social" 
+        android:textSize="18sp" 
+        android:textStyle="bold" /> 
+ 
+    <!-- Other UI elements --> 
+ 
+</LinearLayout> 
+
+nav_header_main.xml 
+
+<?xml version="1.0" encoding="utf-8"?> 
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:layout_width="match_parent" 
+    android:layout_height="wrap_content" 
+    android:orientation="vertical" 
+    android:padding="16dp"> 
+ 
+    <!-- Header content like an image or text --> 
+    <ImageView 
+        android:id="@+id/nav_header_image" 
+        android:layout_width="match_parent" 
+        android:layout_height="200dp" 
+        android:src="@drawable/ic_header" /> 
+ 
+    <TextView 
+        android:id="@+id/nav_header_text" 
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content" 
+        android:text="Welcome to the App" /> 
+</LinearLayout> 
+
+training_fragment.xml 
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:layout_width="match_parent" 
+    android:layout_height="match_parent" 
+    android:gravity="center" 
+    android:orientation="vertical"> 
+ 
+    <TextView 
+        android:id="@+id/training_text" 
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content" 
+        android:text="Training Fragment" 
+        android:textSize="20sp" /> 
+</LinearLayout> 
+
+(in res folder) menu folder ( holds 3 .xml code) 
+
+activity_main_drawer.xml 
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"> 
+    <item 
+        android:id="@+id/nav_home" 
+        android:icon="@drawable/ic_home_black_24dp" 
+        android:title="@string/title_home" /> 
+    <item 
+        android:id="@+id/nav_dashboard" 
+        android:icon="@drawable/ic_dashboard_black_24dp" 
+        android:title="@string/title_dashboard" /> 
+    <item 
+        android:id="@+id/nav_notifications" 
+        android:icon="@drawable/ic_notifications_black_24dp" 
+        android:title="@string/title_notifications" /> 
+</menu> 
+
+bottom_nav_menu.xml 
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"> 
+    <item 
+        android:id="@+id/navigation_home" 
+        android:icon="@drawable/ic_home_black_24dp" 
+        android:title="@string/title_home" /> 
+    <item 
+        android:id="@+id/navigation_dashboard" 
+        android:icon="@drawable/ic_dashboard_black_24dp" 
+        android:title="@string/title_dashboard" /> 
+    <item 
+        android:id="@+id/navigation_notifications" 
+        android:icon="@drawable/ic_notifications_black_24dp" 
+        android:title="@string/title_notifications" /> 
+</menu> 
+
+nav_menu.xml 
+
+<?xml version="1.0" encoding="utf-8"?> 
+<menu xmlns:android="http://schemas.android.com/apk/res/android"> 
+ 
+    <item 
+        android:id="@+id/nav_home" 
+        android:title="Home" 
+        android:icon="@drawable/ic_home" /> 
+ 
+    <item 
+        android:id="@+id/nav_settings" 
+        android:title="Settings" 
+        android:icon="@drawable/ic_settings" /> 
+ 
+</menu> 
+
+(in res folder) mipmap folder ( holder two folders) 
+
+        (in mipmap folder) ic_launcher folder ( holds 5 .webp and 1 .xml) 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Ic_launcher.xml  
+
+ 
+
+<?xml version="1.0" encoding="utf-8"?> 
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android"> 
+    <background android:drawable="@drawable/ic_launcher_background" /> 
+    <foreground android:drawable="@drawable/ic_launcher_foreground" /> 
+    <monochrome android:drawable="@drawable/ic_launcher_foreground" /> 
+</adaptive-icon> 
+
+ 
+
+(in mipmap) ic_launcher_round (6) 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+<?xml version="1.0" encoding="utf-8"?> 
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android"> 
+    <background android:drawable="@drawable/ic_launcher_background" /> 
+    <foreground android:drawable="@drawable/ic_launcher_foreground" /> 
+    <monochrome android:drawable="@drawable/ic_launcher_foreground" /> 
+</adaptive-icon> 
+
+ 
+
+(in res folder) navigation folder (1 .xml) 
+
+mobile_navigation 
+
+<?xml version="1.0" encoding="utf-8"?> 
+<navigation xmlns:android="http://schemas.android.com/apk/res/android" 
+    xmlns:app="http://schemas.android.com/apk/res-auto" 
+    xmlns:tools="http://schemas.android.com/tools" 
+    android:id="@+id/mobile_navigation" 
+    app:startDestination="@+id/navigation_home"> 
+ 
+    <!-- Home Fragment --> 
+    <fragment 
+        android:id="@+id/navigation_home" 
+        android:name="com.elgrupodoscybersecuritycompany.interactivetraining.layout.fragment_home" 
+        android:label="@string/title_home" 
+        tools:layout="@layout/fragment_home" /> 
+ 
+ 
+ 
+ 
+ 
+ 
+    <!-- Dashboard Fragment --> 
+    <fragment 
+        android:id="@+id/navigation_dashboard" 
+        android:name="com.elgrupodoscybersecuritycompany.interactivetraining.ui.dashboard.DashboardFragment" 
+        android:label="@string/title_dashboard" 
+        tools:layout="@layout/fragment_dashboard" /> 
+ 
+    <!-- Notifications Fragment --> 
+    <fragment 
+        android:id="@+id/navigation_notifications" 
+        android:name="com.elgrupodoscybersecuritycompany.interactivetraining.ui.notifications.NotificationsFragment" 
+        android:label="@string/title_notifications" 
+        tools:layout="@layout/fragment_notifications" /> 
+</navigation> 
+
+ 
+
+(in res folder) values folder  (holds themes folder and 3 .mxl code) 
+
+colors.xml 
+
+<?xml version="1.0" encoding="utf-8"?> 
+<resources> 
+    <color name="purple_200">#FFBB86FC</color> 
+    <color name="purple_500">#FF6200EE</color> 
+    <color name="purple_700">#FF3700B3</color> 
+    <color name="teal_200">#FF03DAC5</color> 
+    <color name="teal_700">#FF018786</color> 
+    <color name="black">#FF000000</color> 
+    <color name="white">#FFFFFFFF</color> 
+</resources> 
+
+ 
+
+dimes.xml 
+
+<resources> 
+    <!-- Default screen margins, per the Android Design guidelines. --> 
+    <dimen name="activity_horizontal_margin">16dp</dimen> 
+    <dimen name="activity_vertical_margin">16dp</dimen> 
+</resources> 
+
+ 
+
+strings.xml 
+
+<resources> 
+    <string name="app_name">Interactive Employee Training</string> 
+    <string name="title_home">Home</string> 
+    <string name="home_fragment">Home Fragment</string> 
+    <string name="title_dashboard">Dashboard</string> 
+    <string name="title_notifications">Notifications</string> 
+    <string name="title_social">Social</string> 
+    <string name="header_text">Header Text</string> 
+    <string name="header_image_desc">Header image</string> 
+    <string name="nav_home">Home</string> 
+    <string name="nav_settings">Settings</string> 
+</resources> 
+
+(in res – values folder ) Themes folder 
+
+themes.xml 
+
+<resources xmlns:tools="http://schemas.android.com/tools"> 
+    <!-- Base application theme. --> 
+    <style name="Theme.InteractiveEmployeeTraining" parent="Theme.MaterialComponents.DayNight.DarkActionBar"> 
+        <!-- Primary brand color. --> 
+        <item name="colorPrimary">@color/purple_500</item> 
+        <item name="colorPrimaryVariant">@color/purple_700</item> 
+        <item name="colorOnPrimary">@color/white</item> 
+        <!-- Secondary brand color. --> 
+        <item name="colorSecondary">@color/teal_200</item> 
+        <item name="colorSecondaryVariant">@color/teal_700</item> 
+        <item name="colorOnSecondary">@color/black</item> 
+        <!-- Status bar color. --> 
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item> 
+        <!-- Customize your theme here. --> 
+    </style> 
+</resources> 
+
+ 
+
+themes.xml (night) 
+
+<resources xmlns:tools="http://schemas.android.com/tools"> 
+    <!-- Base application theme. --> 
+    <style name="Theme.InteractiveEmployeeTraining" parent="Theme.MaterialComponents.DayNight.DarkActionBar"> 
+        <!-- Primary brand color. --> 
+        <item name="colorPrimary">@color/purple_200</item> 
+        <item name="colorPrimaryVariant">@color/purple_700</item> 
+        <item name="colorOnPrimary">@color/black</item> 
+        <!-- Secondary brand color. --> 
+        <item name="colorSecondary">@color/teal_200</item> 
+        <item name="colorSecondaryVariant">@color/teal_200</item> 
+        <item name="colorOnSecondary">@color/black</item> 
+        <!-- Status bar color. --> 
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item> 
+        <!-- Customize your theme here. --> 
+    </style> 
+</resources> 
+
+(in res folder) xml folder (hold two .xml) 
+
+backup_rules.xml 
+
+<?xml version="1.0" encoding="utf-8"?><!-- 
+   Sample backup rules file; uncomment and customize as necessary. 
+   See https://developer.android.com/guide/topics/data/autobackup 
+   for details. 
+   Note: This file is ignored for devices older that API 31 
+   See https://developer.android.com/about/versions/12/backup-restore 
+--> 
+<full-backup-content> 
+    <!-- 
+   <include domain="sharedpref" path="."/> 
+   <exclude domain="sharedpref" path="device.xml"/> 
+--> 
+</full-backup-content> 
+
+ 
+
+ 
+
+data_extraction_rules.xml 
+
+<?xml version="1.0" encoding="utf-8"?><!-- 
+   Sample data extraction rules file; uncomment and customize as necessary. 
+   See https://developer.android.com/about/versions/12/backup-restore#xml-changes 
+   for details. 
+--> 
+<data-extraction-rules> 
+    <cloud-backup> 
+        <!-- TODO: Use <include> and <exclude> to control what is backed up. 
+        <include .../> 
+        <exclude .../> 
+        --> 
+    </cloud-backup> 
+    <!-- 
+    <device-transfer> 
+        <include .../> 
+        <exclude .../> 
+    </device-transfer> 
+    --> 
+</data-extraction-rules> 
+
+ 
+
+Last is Gradle Scripts that can’t be copied end of codes 
