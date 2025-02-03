@@ -1,0 +1,47 @@
+#This Java code defines a TrainingAdapter for an Android application. This adapter is used with a RecyclerView to display a list of TrainingModule objects.
+
+package com.ElGrupoDosCybersecurityCompany.interactivetraining.ui.adapters;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+import com.ElGrupoDosCybersecurityCompany.interactivetraining.ui.models.TrainingModule;
+import java.util.List;
+
+public class TrainingAdapter extends RecyclerView.Adapter<TrainingAdapter.TrainingViewHolder> {
+
+    private final List<TrainingModule> trainingModules;
+
+    public TrainingAdapter(List<TrainingModule> trainingModules) {
+        this.trainingModules = trainingModules;
+    }
+
+    @NonNull
+    @Override
+    public TrainingViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_training, parent, false);
+        return new TrainingViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull TrainingViewHolder holder, int position) {
+        TrainingModule module = trainingModules.get(position);
+        // Bind data to UI elements (e.g., holder.titleTextView.setText(module.getTitle()))
+    }
+
+    @Override
+    public int getItemCount() {
+        return trainingModules != null ? trainingModules.size() : 0;
+    }
+
+    static class TrainingViewHolder extends RecyclerView.ViewHolder {
+        // Define UI elements here (e.g., TextView titleTextView)
+
+        TrainingViewHolder(@NonNull View itemView) {
+            super(itemView);
+            // Initialize UI elements (e.g., titleTextView = itemView.findViewById(R.id.titleTextView))
+        }
+    }
+}
