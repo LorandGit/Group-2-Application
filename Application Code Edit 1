@@ -1,0 +1,65 @@
+# Levi revision from 2/3/2025
+# Added to Github 2/4/2025
+
+package com.ElGrupoDosCybersecurityCompany.interactivetraining.ui.models;
+
+import androidx.annotation.NonNull;
+
+public class TrainingModule {
+    private String moduleId;
+    private String title;
+    private String description;
+    private boolean isCompleted;
+    private int durationMinutes;
+
+    // Constructor
+    public TrainingModule(String moduleId, String title, String description, boolean isCompleted, int durationMinutes) {
+        this.moduleId = moduleId;
+        this.title = title;
+        this.description = description;
+        this.isCompleted = isCompleted;
+        this.durationMinutes = durationMinutes;
+    }
+
+    // Getters and setters
+    public String getModuleId() { return moduleId; }
+    public void setModuleId(String moduleId) { this.moduleId = moduleId; }
+
+    public String getTitle() { return title; }
+    public void setTitle(String title) { this.title = title; }
+
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
+
+    public boolean isCompleted() { return isCompleted; }
+    public void setCompleted(boolean completed) { isCompleted = completed; }
+
+    public int getDurationMinutes() { return durationMinutes; }
+    public void setDurationMinutes(int durationMinutes) { this.durationMinutes = durationMinutes; }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "TrainingModule{" +
+                "moduleId='" + moduleId + '\'' +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", isCompleted=" + isCompleted +
+                ", durationMinutes=" + durationMinutes +
+                '}';
+    }
+
+    // Fixed printDetails() method
+    public void printDetails() {
+        System.out.println(this.toString());
+    }
+
+    // Main method for testing
+    public static void main(String[] args) {
+        TrainingModule cyberSecurityCourse1 = new TrainingModule("TM101", "Cybersecurity Basics", "An introduction to cybersecurity for beginners", false, 120);
+        TrainingModule cyberSecurityCourse2 = new TrainingModule("TM102", "Advanced Security", "Deep dive into security concepts", false, 180);
+
+        cyberSecurityCourse1.printDetails();
+        cyberSecurityCourse2.printDetails();
+    }
+}
