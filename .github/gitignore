@@ -1,0 +1,60 @@
+my-app/
+├── .gitignore
+├── README.md
+├── src/
+│   └── app.py
+└── requirements.txt
+
+# .gitignore
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environment Variables
+.env
+
+# Dependency directories
+node_modules/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Logs and Databases
+*.log
+*.sqlite3
+
+# Mobile Development
+/android/
+/ios/
+*.apk
+*.ipa
+
+# IDE and Editor Files
+.vscode/
+.idea/
+*.swp
+
+# Build Artifacts
+dist/
+build/
+
+# README.md
+# My App
+
+This is a basic application repository for TLAN training application.
+
+## Setup
+
+```bash
+pip install -r requirements.txt
+python src/app.py
+```
+
+# src/app.py
+print("Hello, Git Repository!")
+
+# requirements.txt
+# List your project dependencies here
